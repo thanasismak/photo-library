@@ -1,0 +1,12 @@
+<article class="card">
+    <a class="image" [routerLink]="['/photos', id]">
+      <img [src]="src()" width="400" height="300" alt="Photo {{id}}">
+    </a>
+    <footer>
+      <button mat-stroked-button color="primary"> 
+        <!-- (click)="toggleFavorite.emit(id)" -->
+        <mat-icon aria-hidden="true">{{ isFavorite() ? 'favorite' : 'favorite_border' }}</mat-icon>
+        <span>{{ isFavorite() ? 'Remove from favorites' : 'Add to favorites' }}</span>
+      </button>
+    </footer>
+  </article>
