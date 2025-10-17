@@ -1,1 +1,11 @@
-<p>favorite-page works!</p>
+<ng-container *ngIf="ids().length > 0" else noFavorites>
+    <section class="grid">
+        <!-- <app-photo-card *ngFor="let id of ids(); trackBy: track" [id]="id" [src]="photoSrc(id)" [isFavorite]="true"
+            (toggleFavorite)="toggle($event)">
+        </app-photo-card> -->
+    </section>
+</ng-container>
+
+<ng-template #noFavorites>
+    <p class="empty">No favorites yet.</p>
+</ng-template>

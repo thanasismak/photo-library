@@ -1,1 +1,9 @@
-<p>photo-gallery-page works!</p>
+<!-- <section class="grid" appInfiniteScroll [disabled]="loading()" (scrolled)="loadMore()"> -->
+    <!-- <app-photo-card *ngFor="let p of items(); trackBy: track" [id]="p.id" [src]="p.previewUrl"
+        [isFavorite]="isFavorite(p.id)" (toggleFavorite)="toggle($event)">
+    </app-photo-card> -->
+<!-- </section> -->
+
+<div class="loading" *ngIf="loading()">
+    <mat-spinner diameter="36"></mat-spinner>
+</div>
