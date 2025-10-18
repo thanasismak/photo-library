@@ -1,18 +1,25 @@
-@if(1===1) {
-<ng-container *ngTemplateOutlet="favorites"></ng-container>
+@if(favorites().length > 0) {
+<ng-container *ngTemplateOutlet="favoritesTemplate"></ng-container>
 }
 @else {
-<ng-container *ngTemplateOutlet="noFavorites"></ng-container>
+<ng-container *ngTemplateOutlet="noFavoritesTemplate"></ng-container>
 }
 
-<ng-template #noFavorites>
+<ng-template #noFavoritesTemplate>
     <p class="empty">No favorites yet.</p>
 </ng-template>
 
-<ng-template #favorites>
-    <section class="grid">
-        <!-- <app-photo-card *ngFor="let id of ids(); trackBy: track" [id]="id" [src]="photoSrc(id)" [isFavorite]="true"
-                (toggleFavorite)="toggle($event)">
-            </app-photo-card> -->
+<ng-template #favoritesTemplate>
+    <section class="favorites-container">
+        <h2>Your Favorites</h2>
+        <section class="grid">
+            @for (photo of favorites(); track photo.id) {
+            <app-photo-card [id]="photo.id" [src]="photo.src" (toggleFavorite)="toggle(photo)">
+            </app-photo-card>
+            }
+        </section>
+        <button class="clear-btn" (click)="clearAll()">
+            Clear All
+        </button>
     </section>
 </ng-template>

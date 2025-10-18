@@ -4,12 +4,9 @@
 </div>
 }
 @else {
-<section class="grid" appInfiniteScroll>
-    <!-- [disabled]="loading()" (scrolled)="loadMore()" -->
+<section class="grid" appInfiniteScroll (scrolled)="loadMore()">
     @for(photo of items(); track photo.id){
-    <app-photo-card [id]="photo.id" [src]="photo.previewUrl" [isFavorite]="isFavorite(photo.id)"
-        (toggleFavorite)="toggle(photo.id)">
-    </app-photo-card>
+    <app-photo-card [id]="photo.id" [src]="photo.src"></app-photo-card>
     }
 </section>
 }
