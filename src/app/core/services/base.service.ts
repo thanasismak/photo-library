@@ -11,7 +11,7 @@ export class BaseService {
 
   get<T>(url: string): Observable<T> {
     return this.http
-      .get<T>(API_BASE + url)
+      .get<T>(url)
       .pipe(catchError((error) => {
         console.error('GET request error:', error);
         throw error;
