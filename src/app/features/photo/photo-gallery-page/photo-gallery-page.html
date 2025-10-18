@@ -1,9 +1,15 @@
-<!-- <section class="grid" appInfiniteScroll [disabled]="loading()" (scrolled)="loadMore()"> -->
-    <!-- <app-photo-card *ngFor="let p of items(); trackBy: track" [id]="p.id" [src]="p.previewUrl"
-        [isFavorite]="isFavorite(p.id)" (toggleFavorite)="toggle($event)">
-    </app-photo-card> -->
-<!-- </section> -->
-
-<div class="loading" *ngIf="loading()">
+@if(loading()) {
+<div class="loading">
     <mat-spinner diameter="36"></mat-spinner>
 </div>
+}
+@else {
+<section class="grid" appInfiniteScroll>
+    <!-- [disabled]="loading()" (scrolled)="loadMore()" -->
+    @for(photo of items(); track photo.id){
+    <app-photo-card [id]="photo.id" [src]="photo.previewUrl" [isFavorite]="isFavorite(photo.id)"
+        (toggleFavorite)="toggle(photo.id)">
+    </app-photo-card>
+    }
+</section>
+}

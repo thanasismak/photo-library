@@ -1,8 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, computed } from '@angular/core';
 
 @Component({
   selector: 'app-favorite-page',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './favorite-page.html',
   styleUrl: './favorite-page.scss'
 })

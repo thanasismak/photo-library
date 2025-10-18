@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
@@ -9,8 +9,9 @@ import { RouterModule } from '@angular/router';
   styleUrl: './photo-card.scss'
 })
 export class PhotoCard {
-  id = input();
+  id = input.required<string>();
   src = input();
   isFavorite = input();
-  // toggleFavorite = new EventEmitter<string>();
+
+  toggleFavorite = output<string>();
 }
