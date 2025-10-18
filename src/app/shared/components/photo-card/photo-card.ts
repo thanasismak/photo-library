@@ -1,17 +1,23 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { FavoritesService } from '../../../core/services/favorites.service';
+import { Photo } from '../../../core/services/photo.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-photo-card',
-  imports: [MatIconModule, RouterModule],
+  standalone: true,
+  imports: [MatIconModule, RouterModule, MatButtonModule],
   templateUrl: './photo-card.html',
   styleUrl: './photo-card.scss'
 })
 export class PhotoCard {
-  id = input.required<string>();
-  src = input();
-  isFavorite = input();
+  readonly favoritesService = inject(FavoritesService);
 
-  toggleFavorite = output<string>();
+  id = input.required<string>();
+  src = input<string>();
+  toggleFavorite() {
+    this.favoritesService.toggle({ id: this.id() } as Photo);
+  }
 }

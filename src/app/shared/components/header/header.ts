@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [MatButtonToggleModule, RouterModule],
   templateUrl: './header.html',
   styleUrl: './header.scss'
