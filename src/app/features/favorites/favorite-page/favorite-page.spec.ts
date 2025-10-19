@@ -77,7 +77,7 @@ describe('FavoritePage', () => {
   it('should show "No favorites" message when list is empty', () => {
     mockService.favorites.set([]); // Clear all favorites
     fixture.detectChanges();
-    const message = fixture.debugElement.query(By.css('.empty p')).nativeElement;
+    const message = fixture.debugElement.query(By.css('.empty-state p')).nativeElement;
     expect(message.textContent).toContain('No favorites yet.');
   });
 });
