@@ -1,11 +1,11 @@
 <article class="card">
-  <a class="image" [routerLink]="['/photos', id()]">
-    <img [src]="src()" width="400" height="300">
+  <a class="image" [class]="isGalleryView() ? 'compact' : 'fullsize'" [routerLink]="['/photos', photo().id]">
+    <img [src]="photo().src" [alt]="photo().alt" />
   </a>
   <footer>
-    <button mat-stroked-button color="primary" (click)="toggleFavorite()">
-      <mat-icon>{{ favoritesService.isFavorite(id()) ? 'favorite' : 'favorite_border' }}</mat-icon>
-      <span>{{ favoritesService.isFavorite(id()) ? 'Remove from favorites' : 'Add to favorites' }}</span>
+    <button mat-stroked-button color="primary" (click)="toggleFavorite.emit(photo())">
+      <mat-icon>{{ favoritesService.isFavorite(photo().id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+      <span>{{ favoritesService.isFavorite(photo().id) ? 'Remove from favorites' : 'Add to favorites' }}</span>
     </button>
   </footer>
 </article>

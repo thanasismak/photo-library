@@ -1,6 +1,6 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FavoritesService } from '../../../core/services/favorites.service';
 import { Photo } from '../../../core/services/photo.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,10 +14,9 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class PhotoCard {
   readonly favoritesService = inject(FavoritesService);
-
-  id = input.required<string>();
-  src = input<string>();
-  toggleFavorite() {
-    this.favoritesService.toggle({ id: this.id() } as Photo);
-  }
+  readonly router = inject(Router);
+  photo = input.required<Photo>();           
+  isFavorite = input<boolean>(false);
+  isGalleryView = computed(() => this.router.url.endsWith('photos'));
+  toggleFavorite = output<Photo>(); 
 }
