@@ -1,7 +1,7 @@
-import { inject, Injectable } from '@angular/core';
-import { API_BASE, API_ENDPOINTS } from '../constants/api.constant';
-import { mapApiResponseToPhotos } from './utils';
-import { delay, map, Observable, of } from 'rxjs';
+import { effect, inject, Injectable, signal } from '@angular/core';
+import { API_ENDPOINTS } from '../constants/api.constant';
+import { mapApiResponseToPhotos, restoreDetailedPhoto, mapApiResponseToPhoto } from './utils';
+import { map, Observable } from 'rxjs';
 import { BaseService } from './base.service';
 export interface Photo {
   id: string;
@@ -12,37 +12,48 @@ export interface Photo {
   alt?: string;
 }
 
+export const PHOTO_KEY = 'photos';
 @Injectable({
   providedIn: 'root'
 })
 export class PhotoService {
   private baseService = inject(BaseService);
+  private readonly PAGE_SIZE = 20;
 
-  public getPhotos(page?: number, limit?: number): Observable<Photo[]> {
-    return this.baseService.get<Photo[]>(API_ENDPOINTS.PHOTO_LIST(page, limit)).pipe(
+  private readonly photos = signal<Photo[]>(restoreDetailedPhoto());
+
+  public getPhotos(page: number): Observable<Photo[]> {
+    return this.baseService.get<Photo[]>(API_ENDPOINTS.PHOTO_LIST(page, this.PAGE_SIZE)).pipe(
       map(data => mapApiResponseToPhotos(data))
     );
   }
-
+  
+  public getPhotoById(id: string): Observable<Photo> {
+    return this.baseService.get<Photo[]>(API_ENDPOINTS.PHOTO_BY_ID(id)).pipe(
+      map(data => mapApiResponseToPhoto(data))
+    );
+  
+  }
+  
   public getImageUrlById(id: string, size: { w: number, h: number } = { w: 1200, h: 800 }) {
     return API_ENDPOINTS.PHOTO_BY_ID(id, size.w, size.h);
   }
 
-  /**
-   * This Piscum API  endpoint for a single photo (e.g., /id/{id}/{width}/{height})
-   * returns a raw image (binary JPEG) rather than JSON data.
-   * Using HttpClient to fetch binary data would cause a JSON parse error. Instead, we simply
-   * construct the image URL directly. letting the browser handle the image loading. via <img> tag.
-   * This approach avoids unnecessary network processing and matches how static image endoints are handled.
-   */
-  public getPhotoById(id: string): Observable<Photo> {
-    const photo: Photo = {
-      id,
-      src: API_ENDPOINTS.PHOTO_BY_ID(id, 1200, 800),
-      alt: 'Photo ' + id
-    };
-    return of(photo).pipe(
-      delay(200) // Simulate network delay
-    );
+  constructor() {
+    effect(() => {
+      localStorage.setItem(PHOTO_KEY, JSON.stringify(this.photos()));
+    });
+  }
+
+  appendPhotos(batch: Photo[]) {
+    this.photos.update(prev => [...prev, ...batch]);
+  }
+
+  getPhotoFromStore(id: string): Photo | undefined {
+    return this.photos().find(p => p.id === id);
+  }
+
+  clearPhotos() {
+    this.photos.set([]);
   }
 }

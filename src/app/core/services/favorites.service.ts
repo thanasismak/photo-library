@@ -1,13 +1,14 @@
 import { effect, Injectable, signal } from '@angular/core';
 import { Photo } from './photo.service';
+import { restoreFavoritePhotos } from './utils';
 
-const FAVORITES_KEY = 'favorites';
+export const FAVORITES_KEY = 'favorites';
 @Injectable({
   providedIn: 'root'
 })
 
 export class FavoritesService {
-  favorites = signal<Photo[]>(this.restore());
+  favorites = signal<Photo[]>(restoreFavoritePhotos());
 
   constructor() {
     // Automatically persist favorites to localStorage whenever they change
@@ -37,10 +38,5 @@ export class FavoritesService {
 
   clearAll() {
     this.favorites.set([]);
-  }
-  // Helpers
-  private restore(): Photo[] {
-    const stored = localStorage.getItem(FAVORITES_KEY || []);
-    return stored ? JSON.parse(stored) : [];
   }
 }
