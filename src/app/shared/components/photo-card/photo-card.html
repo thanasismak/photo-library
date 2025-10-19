@@ -1,4 +1,4 @@
-<article class="card">
+<div class="card">
   <a class="image" [class]="isGalleryView() ? 'compact' : 'fullsize'" [routerLink]="['/photos', photo().id]">
     <img [src]="photo().src" [alt]="photo().alt" />
   </a>
@@ -8,4 +8,4 @@
       <span>{{ favoriteService.isFavorite(photo().id) ? 'Remove from favorites' : 'Add to favorites' }}</span>
     </button>
   </footer>
-</article>
+</div>

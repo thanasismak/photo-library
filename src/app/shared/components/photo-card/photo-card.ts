@@ -16,8 +16,11 @@ export class PhotoCard {
   readonly favoriteService = inject(FavoritesService);
   readonly router = inject(Router);
   
-  photo = input.required<Photo>();           
+  photo = input.required<Photo>();
   isFavorite = input<boolean>(false);
-  isGalleryView = computed(() => this.router.url.endsWith('photos'));
-  toggleFavorite = output<Photo>(); 
+  isGalleryView = computed(() => {
+    console.log(this.router.url.endsWith('photos') || this.router.url.endsWith('favorites'))
+    return this.router.url.endsWith('photos') || this.router.url.endsWith('favorites')
+  });
+  toggleFavorite = output<Photo>();
 }

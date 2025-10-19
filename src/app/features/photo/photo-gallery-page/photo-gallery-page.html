@@ -1,8 +1,8 @@
-<section class="grid" appInfiniteScroll-directive (scrolled)="loadMore()">
+<div class="grid" appInfiniteScroll-directive (scrolled)="loadMore()">
     @for(photo of items(); track $index) {
     <app-photo-card [photo]="photo" [isFavorite]="favoriteService.isFavorite(photo.id)" (toggleFavorite)="favoriteService.toggle(photo)"></app-photo-card>
     }
-</section>
+</div>
 @if(loading()) {
 <div class="loading"><mat-spinner diameter="36"></mat-spinner></div>
 }

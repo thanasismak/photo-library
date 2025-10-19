@@ -6,13 +6,13 @@
 }
 
 <ng-template #noFavoritesTemplate>
-    <section class="empty">
+    <div class="empty-state">
         <mat-icon fontIcon="sentiment_dissatisfied"></mat-icon>
-        <p>No favorites yet.</p>
+        <div>No favorites yet.</div>
         <button mat-stroked-button color="primary" [routerLink]="['/photos']">
             Browse Photos
         </button>
-    </section>
+    </div>
 </ng-template>
 
 <ng-template #favoritesTemplate>
