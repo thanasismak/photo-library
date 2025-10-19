@@ -1,11 +1,21 @@
-<section class="photo-detail">
+<div class="photo-detail">
     @if (loading()) {
     <div class="loading">
         <mat-spinner diameter="48"></mat-spinner>
     </div>
     } @else if (photo()) {
-    <app-photo-card [id]="photo()!.id" [src]="photo()!.src"></app-photo-card>
+    <div class="photo-content">
+        <button mat-icon-button class="nav-btn left" [routerLink]="['/photos']">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <app-photo-card [photo]="photo()" (toggleFavorite)="favoriteService.toggle(photo())"></app-photo-card>
+
+        <button mat-icon-button class="nav-btn right" (click)="openInfoDialog()">
+            <mat-icon>info</mat-icon>
+        </button>
+    </div>
     } @else {
     <p class="empty">Photo not found.</p>
     }
-</section>
+</div>

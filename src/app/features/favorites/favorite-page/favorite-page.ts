@@ -2,22 +2,21 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { PhotoCard } from "../../../shared/components/photo-card/photo-card";
 import { FavoritesService } from '../../../core/services/favorites.service';
-import { Photo, PhotoService } from '../../../core/services/photo.service';
+import { Photo } from '../../../core/services/photo.service';
+import { MatIconModule } from "@angular/material/icon";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-favorite-page',
   standalone: true,
-  imports: [CommonModule, PhotoCard],
+  imports: [RouterModule, CommonModule, PhotoCard, MatIconModule],
   templateUrl: './favorite-page.html',
   styleUrl: './favorite-page.scss'
 })
 export class FavoritePage {
-  private readonly favoritesService = inject(FavoritesService);
-  private readonly photoService = inject(PhotoService);
+  readonly favoritesService = inject(FavoritesService);
 
   favorites = computed(() => this.favoritesService.favorites());
-
-  photoSrc(id: string) { return this.photoService.getImageUrlById(id, { w: 400, h: 300 }); }
 
   toggle(photo: Photo) { this.favoritesService.toggle(photo); }
 

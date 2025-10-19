@@ -1,12 +1,8 @@
-@if(loading()) {
-<div class="loading">
-    <mat-spinner diameter="36"></mat-spinner>
-</div>
-}
-@else {
-<section class="grid" appInfiniteScroll (scrolled)="loadMore()">
-    @for(photo of items(); track photo.id){
-    <app-photo-card [id]="photo.id" [src]="photo.src"></app-photo-card>
+<section class="grid" appInfiniteScroll-directive (scrolled)="loadMore()">
+    @for(photo of items(); track $index) {
+    <app-photo-card [photo]="photo" [isFavorite]="favoriteService.isFavorite(photo.id)" (toggleFavorite)="favoriteService.toggle(photo)"></app-photo-card>
     }
 </section>
+@if(loading()) {
+<div class="loading"><mat-spinner diameter="36"></mat-spinner></div>
 }

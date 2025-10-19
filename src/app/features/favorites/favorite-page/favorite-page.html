@@ -6,7 +6,13 @@
 }
 
 <ng-template #noFavoritesTemplate>
-    <p class="empty">No favorites yet.</p>
+    <section class="empty">
+        <mat-icon fontIcon="sentiment_dissatisfied"></mat-icon>
+        <p>No favorites yet.</p>
+        <button mat-stroked-button color="primary" [routerLink]="['/photos']">
+            Browse Photos
+        </button>
+    </section>
 </ng-template>
 
 <ng-template #favoritesTemplate>
@@ -14,12 +20,14 @@
         <h2>Your Favorites</h2>
         <section class="grid">
             @for (photo of favorites(); track photo.id) {
-            <app-photo-card [id]="photo.id" [src]="photo.src" (toggleFavorite)="toggle(photo)">
+            <app-photo-card [photo]="photo" (toggleFavorite)="favoritesService.toggle(photo)">
             </app-photo-card>
             }
         </section>
-        <button class="clear-btn" (click)="clearAll()">
-            Clear All
-        </button>
+        <div class="actions">
+            <button mat-flat-button color="warn" (click)="clearAll()">
+                Clear All
+            </button>
+        </div>
     </section>
 </ng-template>
