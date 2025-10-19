@@ -11,9 +11,10 @@ export class InfiniteScrollDirective {
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
-    const ScrollPosition = window.innerHeight + window.scrollY;
+    const scrollPosition = window.innerHeight + window.scrollY;
     const documentHeight = document.documentElement.scrollHeight;
-    if (documentHeight - ScrollPosition <= this.threshold()) {
+    //if the bottom of the page is within 300px of view, fire another data load.
+    if (documentHeight - scrollPosition <= this.threshold()) { 
       this.scrolled.emit();
     }
   }
