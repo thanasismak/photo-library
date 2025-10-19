@@ -20,7 +20,7 @@ export class PhotoService {
   private baseService = inject(BaseService);
   private readonly PAGE_SIZE = 20;
 
-  private readonly photos = signal<Photo[]>(restoreDetailedPhoto());
+  readonly photos = signal<Photo[]>(restoreDetailedPhoto());
 
   public getPhotos(page: number): Observable<Photo[]> {
     return this.baseService.get<Photo[]>(API_ENDPOINTS.PHOTO_LIST(page, this.PAGE_SIZE)).pipe(

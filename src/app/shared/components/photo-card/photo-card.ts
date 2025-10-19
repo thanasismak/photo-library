@@ -13,8 +13,9 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './photo-card.scss'
 })
 export class PhotoCard {
-  readonly favoritesService = inject(FavoritesService);
+  readonly favoriteService = inject(FavoritesService);
   readonly router = inject(Router);
+  
   photo = input.required<Photo>();           
   isFavorite = input<boolean>(false);
   isGalleryView = computed(() => this.router.url.endsWith('photos'));

@@ -19,7 +19,7 @@ export class PhotoGalleryPage implements OnInit {
 
   readonly items = signal<Photo[]>([]);
   readonly loading = signal(false);
-  private page = signal(1);
+  page = signal(1);
 
   ngOnInit(): void {
     this.loadMore();

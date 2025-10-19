@@ -1,17 +1,38 @@
-import { TestBed } from '@angular/core/testing';
-import { HttpInterceptorFn } from '@angular/common/http';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll.directive';
 
-import { latencyInterceptor } from './latency-interceptor';
+@Component({
+  template: `<div appInfiniteScroll-directive (scrolled)="onScroll()"></div>`
+})
+class TestHostComponent {
+  scrolled = jest.fn();
+}
+
+const setScrollValues = (innerHeight: number, scrollY: number, scrollHeight: number) => {
+  // Instead of defining properties permanently, we mock them per test.
+  Object.defineProperty(window, 'innerHeight', { value: innerHeight, configurable: true });
+  Object.defineProperty(window, 'scrollY', { value: scrollY, configurable: true });
+  Object.defineProperty(document.documentElement, 'scrollHeight', { value: scrollHeight, configurable: true });
+};
 
 describe('latencyInterceptor', () => {
-  const interceptor: HttpInterceptorFn = (req, next) => 
-    TestBed.runInInjectionContext(() => latencyInterceptor(req, next));
+  let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [TestHostComponent, InfiniteScrollDirective],
+    });
+    fixture = TestBed.createComponent(TestHostComponent);
+    fixture.detectChanges();
   });
 
-  it('should be created', () => {
-    expect(interceptor).toBeTruthy();
+  it('should NOT emit scrolled event when far from bottom', () => {
+    setScrollValues(600, 100, 3000);
+
+    window.dispatchEvent(new Event('scroll'));
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.scrolled).not.toHaveBeenCalled();
   });
 });

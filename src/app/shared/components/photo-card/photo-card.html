@@ -4,8 +4,8 @@
   </a>
   <footer>
     <button mat-stroked-button color="primary" (click)="toggleFavorite.emit(photo())">
-      <mat-icon>{{ favoritesService.isFavorite(photo().id) ? 'favorite' : 'favorite_border' }}</mat-icon>
-      <span>{{ favoritesService.isFavorite(photo().id) ? 'Remove from favorites' : 'Add to favorites' }}</span>
+      <mat-icon>{{ favoriteService.isFavorite(photo().id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+      <span>{{ favoriteService.isFavorite(photo().id) ? 'Remove from favorites' : 'Add to favorites' }}</span>
     </button>
   </footer>
 </article>
