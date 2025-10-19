@@ -35,7 +35,6 @@ describe('InfiniteScrollDirective', () => {
   });
 
   it('should emit scrolled event when near bottom', () => {
-    // Simulate window near the bottom
     Object.defineProperty(window, 'innerHeight', { value: 900 });
     Object.defineProperty(window, 'scrollY', { value: 2000, writable: true });
     Object.defineProperty(document.documentElement, 'scrollHeight', { value: 2250 });

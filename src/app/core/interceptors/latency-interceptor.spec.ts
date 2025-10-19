@@ -10,7 +10,6 @@ class TestHostComponent {
 }
 
 const setScrollValues = (innerHeight: number, scrollY: number, scrollHeight: number) => {
-  // Instead of defining properties permanently, we mock them per test.
   Object.defineProperty(window, 'innerHeight', { value: innerHeight, configurable: true });
   Object.defineProperty(window, 'scrollY', { value: scrollY, configurable: true });
   Object.defineProperty(document.documentElement, 'scrollHeight', { value: scrollHeight, configurable: true });
